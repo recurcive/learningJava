@@ -81,11 +81,11 @@ public class List<T> implements Iterable<T> {
     }
 
     public T removeLast() {
-
+        return null;
     }
 
     public T getAt(int i) {
-
+        return null;
     }
 
     public void setAt(int i, T elem) {
@@ -97,7 +97,7 @@ public class List<T> implements Iterable<T> {
     }
 
     public T removeAt(int i) {
-
+        return null;
     }
 
     @Override
