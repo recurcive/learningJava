@@ -1,6 +1,9 @@
+package structuries;
+
 import java.util.Iterator;
 
 public class List<T> implements Iterable<T> {
+
     private static class ListElem<E> {
         E info;
         ListElem<E> next, pred;
@@ -14,7 +17,7 @@ public class List<T> implements Iterable<T> {
 
     public static class NoElementException extends RuntimeException {
         public NoElementException() {
-            super("No element of thje list");
+            super("No element of the list");
         }
     }
 
@@ -33,9 +36,14 @@ public class List<T> implements Iterable<T> {
             next = next.next;
             return info;
         }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     ListElem<T> first = null, last = null;
+    private int size = 0;
 
     public void addFirst(T elem) {
         ListElem<T> newElem = new ListElem<>(elem, first, null);
@@ -44,6 +52,7 @@ public class List<T> implements Iterable<T> {
         } else {
             last = newElem;
         }
+        size++;
         first = newElem;
     }
 
@@ -54,6 +63,7 @@ public class List<T> implements Iterable<T> {
         } else {
             first = newElem;
         }
+        size++;
         last = newElem;
     }
 
@@ -77,15 +87,46 @@ public class List<T> implements Iterable<T> {
         } else {
             first.pred = null;
         }
+        size--;
         return info;
     }
 
     public T removeLast() {
-        return null;
+        if (last == null) throw new NoElementException();
+
+        T info = last.info;
+
+        last = last.pred;
+        if (last == null) {
+            first = null;
+        } else {
+            last.next = null;
+        }
+        size--;
+        return info;
     }
 
-    public T getAt(int i) {
-        return null;
+    public T getAt(int index) {
+        if (index == 0) return first.info;
+        if (index == size) return last.info;
+
+
+        int i = 1;
+        if (index < (size / 2) ) {
+            ListElem<T> nextElem = first.next;
+            while (i <= index) {
+                nextElem = nextElem.next;
+                i++;
+            }
+            return nextElem.info;
+        } else {
+            ListElem<T> previousElem = last.pred;
+            while (i <= index) {
+                previousElem = previousElem.pred;
+                i++;
+            }
+            return previousElem.info;
+        }
     }
 
     public void setAt(int i, T elem) {
@@ -100,9 +141,13 @@ public class List<T> implements Iterable<T> {
         return null;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     @Override
     public String toString() {
-        return "List{}";
+        return "structuries.List{}";
     }
 
     @Override
