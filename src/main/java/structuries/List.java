@@ -1,6 +1,8 @@
 package structuries;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class List<T> implements Iterable<T> {
 
@@ -23,14 +25,17 @@ public class List<T> implements Iterable<T> {
 
     private class ListIterator implements Iterator<T> {
         ListElem<T> next = first;
+        long currentVersion = version;
 
         @Override
         public boolean hasNext() {
+            if (version != currentVersion) throw new ConcurrentModificationException();
             return next != null;
         }
 
         @Override
         public T next() {
+            if (version != currentVersion) throw new ConcurrentModificationException();
             if (next == null) throw new IllegalStateException();
             T info = next.info;
             next = next.next;
@@ -44,6 +49,7 @@ public class List<T> implements Iterable<T> {
 
     ListElem<T> first = null, last = null;
     private int size = 0;
+    long version = 0;
 
     public void addFirst(T elem) {
         ListElem<T> newElem = new ListElem<>(elem, first, null);
@@ -53,6 +59,7 @@ public class List<T> implements Iterable<T> {
             last = newElem;
         }
         size++;
+        version++;
         first = newElem;
     }
 
@@ -64,6 +71,7 @@ public class List<T> implements Iterable<T> {
             first = newElem;
         }
         size++;
+        version++;
         last = newElem;
     }
 
@@ -88,6 +96,7 @@ public class List<T> implements Iterable<T> {
             first.pred = null;
         }
         size--;
+        version++;
         return info;
     }
 
@@ -103,25 +112,26 @@ public class List<T> implements Iterable<T> {
             last.next = null;
         }
         size--;
+        version++;
         return info;
     }
 
     public T getAt(int index) {
         if (index == 0) return first.info;
-        if (index == size) return last.info;
+        if (index == size-1) return last.info;
 
 
         int i = 1;
         if (index < (size / 2) ) {
             ListElem<T> nextElem = first.next;
-            while (i <= index) {
+            while (i < index) {
                 nextElem = nextElem.next;
                 i++;
             }
             return nextElem.info;
         } else {
             ListElem<T> previousElem = last.pred;
-            while (i <= index) {
+            while (i <= size-index) {
                 previousElem = previousElem.pred;
                 i++;
             }

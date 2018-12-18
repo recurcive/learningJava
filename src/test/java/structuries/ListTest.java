@@ -25,8 +25,8 @@ public class ListTest {
     test.addFirst("test4");
     test.addFirst("test5");
 
-    assertEquals("test2", test.getAt(2));
-    assertEquals("test2", test.getAt(6));
+    assertEquals("test3", test.getAt(2));
+    assertEquals("test", test.getAt(5));
 
   }
 }
