@@ -137,6 +137,6 @@ public class BSTree<K extends Comparable<K>, V> implements Iterable<V> {
         tree.put(7, "Str 7");
         for (String s : tree) System.out.println(s);
         tree.remove(10);
-        tree.iterate(e -> System.out.println(e));
+        tree.iterate(System.out::println);
     }
 }
