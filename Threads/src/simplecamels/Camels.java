@@ -1,3 +1,5 @@
+package simplecamels;
+
 /**
  * Вводит следующие примитивы:
  * t.join(), t.join(millis), t.interrupt()
