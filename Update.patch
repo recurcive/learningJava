@@ -1,0 +1,30 @@
+Index: src/List.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/List.java	(date 1544704059000)
++++ src/List.java	(date 1544704148717)
+@@ -81,11 +81,11 @@
+     }
+ 
+     public T removeLast() {
+-
++        return null;
+     }
+ 
+     public T getAt(int i) {
+-
++        return null;
+     }
+ 
+     public void setAt(int i, T elem) {
+@@ -97,7 +97,7 @@
+     }
+ 
+     public T removeAt(int i) {
+-
++        return null;
+     }
+ 
+     @Override
